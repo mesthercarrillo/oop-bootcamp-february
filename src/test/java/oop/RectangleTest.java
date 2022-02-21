@@ -19,4 +19,10 @@ public class RectangleTest {
         Rectangle rectangle = new Rectangle(2.5, 2.5);
         assertEquals(rectangle.calculatePerimeter(), 10);
     }
+
+    @Test
+    public void itShouldCalculateArea() {
+        Rectangle rectangle = new Rectangle(2.5, 2.5);
+        assertEquals(rectangle.calculateArea(), 6.25);
+    }
 }

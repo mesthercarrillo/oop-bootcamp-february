@@ -50,5 +50,15 @@ public class MeasureCalculationTest {
         Assert.assertTrue(MeasureCalculation.areMetersEquivalentToCentimeters(2, 200));
     }
 
+    @Test
+    public void itShouldConvertFourGallonsToLiters() {
+        assertEquals(MeasureCalculation.convertGallonsToLiters(4), 15.1416 );
+    }
+
+    @Test
+    public void itShouldCompareGallonsWithLiters() {
+        Assert.assertTrue(MeasureCalculation.areGallonsEquivalentToLiters(4, 15.1416));
+    }
+
 
 }

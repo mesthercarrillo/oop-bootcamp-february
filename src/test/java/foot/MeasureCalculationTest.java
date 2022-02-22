@@ -22,6 +22,8 @@ public class MeasureCalculationTest {
         Assert.assertTrue(MeasureCalculation.areFeetEquivalentToMeters(5, 1.524));
     }
 
+
+
     @Test
     public void itShouldConvertOneInchToYards() {
         assertEquals(MeasureCalculation.convertInchesToYards(1), 0.0278 );
@@ -36,5 +38,17 @@ public class MeasureCalculationTest {
     public void itShouldCompareInchesWithYards() {
         Assert.assertTrue(MeasureCalculation.areInchesEquivalentToYards(5, 0.13899999999999998));
     }
+
+
+    @Test
+    public void itShouldConvertTwoMetersToCentimeters() {
+        assertEquals(MeasureCalculation.convertMetersToCentimeters(2), 200 );
+    }
+
+    @Test
+    public void itShouldCompareMetersWithCentimeters() {
+        Assert.assertTrue(MeasureCalculation.areMetersEquivalentToCentimeters(2, 200));
+    }
+
 
 }

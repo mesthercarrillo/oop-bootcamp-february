@@ -14,11 +14,7 @@ public class Chance {
        this.sidesOfADicesThatNotAreSix = SIDE_OF_A_DICE_THAT_ARE_NOT_SIX;
     }
 
-    public double calculateProbability() {
-        return calculateTheDiceThing() / sidesOfADices;
-    }
-
-    private double calculateTheDiceThing() {
-
-    }
+//    public double calculateProbability() {
+//        return calculateTheDiceThing() / sidesOfADices;
+//    }
 }

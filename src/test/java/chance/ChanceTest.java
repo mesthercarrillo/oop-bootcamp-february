@@ -12,4 +12,11 @@ public class ChanceTest {
         Chance chance = new Chance();
         assertEquals(chance.calculateProbability(), expectedProbability);
     }
+    
+    @Test
+    public void itShouldReturnProbabilityOfNotGettingSixWhenRollingOneDice() {
+        double expectedProbability = 0.8333333333333334;
+        Chance chance = new Chance();
+        assertEquals(chance.calculateProbability(), expectedProbability);
+    }
 }

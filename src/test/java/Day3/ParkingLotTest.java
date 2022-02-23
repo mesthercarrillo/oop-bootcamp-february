@@ -29,4 +29,10 @@ public class ParkingLotTest {
         assertEquals(parkingLot.getCarsParked().size(), 1);
 
     }
+
+    @Test
+    public void itShouldCheckCapacityRate() {
+        var parkingLot = new ParkingLot();
+        assertTrue(parkingLot.checkCapacityRate(80));
+    }
 }

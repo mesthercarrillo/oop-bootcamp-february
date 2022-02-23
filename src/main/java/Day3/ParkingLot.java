@@ -5,7 +5,7 @@ import java.util.Set;
 
 public class ParkingLot {
 
-    private static final int PARKING_LOT_CAPACITY = 1;
+    private static final int PARKING_LOT_CAPACITY = 10;
     private final Set<Car> carsParked = new HashSet<>();
 
     public boolean hasSpace() {
@@ -19,4 +19,9 @@ public class ParkingLot {
     public void park(Car car) {
         carsParked.add(car);
     }
+
+    public boolean checkCapacityRate(int rate) {
+      return (PARKING_LOT_CAPACITY * 0.8 <= rate);
+    }
+
 }

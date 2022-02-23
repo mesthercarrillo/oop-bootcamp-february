@@ -4,7 +4,7 @@ import java.util.Set;
 
 public class ParkingAssistant {
 
-    public static final int PARKING_CAPACITY_RATE = 80;
+    private static final int PARKING_CAPACITY_RATE = 80;
     private final Set<ParkingLot> parkingLots;
 
     public ParkingAssistant(Set<ParkingLot> parkingLots) {
@@ -14,7 +14,7 @@ public class ParkingAssistant {
     public ParkingLot parkInFirstParkingLotAvailable(Car car) {
         return parkingLots.stream()
             .filter(ParkingLot::hasSpace)
-            .filter(parkingLot -> parkingLot.checkCapacityRate(PARKING_CAPACITY_RATE))
+            .filter(parkingLot -> parkingLot.checkCapacityRateLessThan(PARKING_CAPACITY_RATE))
             .peek(parkingLot -> parkingLot.park(car))
             .findFirst()
             .get();

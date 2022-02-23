@@ -4,6 +4,7 @@ import org.mockito.Mockito;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import static org.mockito.Mockito.mock;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
@@ -12,9 +13,12 @@ public class ParkingLotTest {
 
     private ParkingLot parkingLot;
 
+    private OverUsageNotification notification;
+
     @BeforeMethod
     public void setUp() {
-        parkingLot = new ParkingLot(5);
+        notification = mock(OverUsageNotification.class);
+        parkingLot = new ParkingLot(5, notification);
     }
 
     @Test
@@ -24,7 +28,7 @@ public class ParkingLotTest {
 
     @Test
     public void itShouldIfNotHasSpace() {
-        var parkingLot = new ParkingLot(1);
+        var parkingLot = new ParkingLot(1, notification);
         var car = new Car();
         parkingLot.park(car);
         assertFalse(parkingLot.hasSpace());
@@ -40,15 +44,15 @@ public class ParkingLotTest {
 
     @Test
     public void itShouldCheckCapacityRateBelowLimit() {
-        assertTrue(parkingLot.checkCapacityRate(80));
+        assertTrue(parkingLot.checkCapacityRateLessThan(80));
     }
 
     @Test
     public void itShouldCheckCapacityRateAboveLimit() {
-        var parkingLot = new ParkingLot(1);
+        var parkingLot = new ParkingLot(1, notification);
         var car = new Car();
         parkingLot.park(car);
-        assertFalse(parkingLot.checkCapacityRate(80));
+        assertFalse(parkingLot.checkCapacityRateLessThan(80));
     }
 
     @Test
@@ -56,12 +60,13 @@ public class ParkingLotTest {
         var carOne = new Car();
         var carTwo = new Car();
         var carThree = new Car();
-        var notification = new OverUsageNotification();
+        var carFour = new Car();
         parkingLot.park(carOne);
         parkingLot.park(carTwo);
         parkingLot.park(carThree);
+        parkingLot.park(carFour);
         Mockito.verify(notification).sendNotification();
-        assertTrue(parkingLot.checkCapacityRate(75));
+        assertFalse(parkingLot.checkCapacityRateLessThan(75));
 
     }
 

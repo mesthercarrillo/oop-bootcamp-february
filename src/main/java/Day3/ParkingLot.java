@@ -7,11 +7,11 @@ public class ParkingLot {
 
     private final int capacity;
     private final Set<Car> carsParked = new HashSet<>();
-    private final OverUsageNotification notification;
+    private final OverUsageNotification overUsageNotification;
 
-    public ParkingLot(int capacity) {
+    public ParkingLot(int capacity, OverUsageNotification overUsageNotification) {
         this.capacity = capacity;
-        this.notification = new OverUsageNotification();
+        this.overUsageNotification = overUsageNotification;
     }
 
     public boolean hasSpace() {
@@ -24,9 +24,12 @@ public class ParkingLot {
 
     public void park(Car car) {
         carsParked.add(car);
+        if (!checkCapacityRateLessThan(75)) {
+            overUsageNotification.sendNotification();
+        }
     }
 
-    public boolean checkCapacityRate(int rate) {
+    public boolean checkCapacityRateLessThan(int rate) {
         return getCurrentRate() <= rate;
     }
 

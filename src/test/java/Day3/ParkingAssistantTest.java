@@ -15,7 +15,7 @@ public class ParkingAssistantTest {
     public void itShouldParkACarInTheFirstParkingLotAvailable() {
         var parkingLot = mock(ParkingLot.class);
         when(parkingLot.hasSpace()).thenReturn(true);
-        when(parkingLot.checkCapacityRate(80)).thenReturn(true);
+        when(parkingLot.checkCapacityRateLessThan(80)).thenReturn(true);
 
         var assistant = new ParkingAssistant(Set.of(parkingLot));
         var car = new Car();
@@ -24,6 +24,6 @@ public class ParkingAssistantTest {
         var selectedParking = assistant.parkInFirstParkingLotAvailable(car);
         assertEquals(selectedParking, parkingLot);
         Mockito.verify(parkingLot).park(car);
-        Mockito.verify(parkingLot).checkCapacityRate(80);
+        Mockito.verify(parkingLot).checkCapacityRateLessThan(80);
     }
 }

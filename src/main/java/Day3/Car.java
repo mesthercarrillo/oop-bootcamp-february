@@ -1,8 +1,18 @@
 package Day3;
 
 public class Car {
+    private String parkedIn;
 
-    public boolean parkIn( ParkingLot parkingLot) {
-        return true;
+
+    public String parkIn(String parkingLot) {
+        return String.format("Car park in %s", parkingLot);
+    }
+
+    public String getParkedIn() {
+        return "";
+    }
+
+    public void parkOut() {
+
     }
 }

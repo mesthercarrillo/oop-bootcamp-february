@@ -1,5 +1,6 @@
 package Day3;
 
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import static org.testng.Assert.assertEquals;
@@ -7,15 +8,22 @@ import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
 public class ParkingLotTest {
+
+    private ParkingLot parkingLot;
+
+    @BeforeMethod
+    public void setUp() {
+        parkingLot = new ParkingLot(10);
+    }
+
     @Test
     public void itShouldCheckIfHasSpace() {
-        var parkingLot = new ParkingLot();
         assertTrue(parkingLot.hasSpace());
     }
 
     @Test
     public void itShouldIfNotHasSpace() {
-        var parkingLot = new ParkingLot();
+        var parkingLot = new ParkingLot(1);
         var car = new Car();
         parkingLot.park(car);
         assertFalse(parkingLot.hasSpace());
@@ -23,7 +31,6 @@ public class ParkingLotTest {
 
     @Test
     public void itShouldParkACar() {
-        var parkingLot = new ParkingLot();
         var car = new Car();
         parkingLot.park(car);
         assertEquals(parkingLot.getCarsParked().size(), 1);
@@ -31,8 +38,15 @@ public class ParkingLotTest {
     }
 
     @Test
-    public void itShouldCheckCapacityRate() {
-        var parkingLot = new ParkingLot();
+    public void itShouldCheckCapacityRateBelowLimit() {
         assertTrue(parkingLot.checkCapacityRate(80));
+    }
+
+    @Test
+    public void itShouldCheckCapacityRateAboveLimit() {
+        var parkingLot = new ParkingLot(1);
+        var car = new Car();
+        parkingLot.park(car);
+        assertFalse(parkingLot.checkCapacityRate(80));
     }
 }

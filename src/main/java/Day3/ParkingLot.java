@@ -5,11 +5,15 @@ import java.util.Set;
 
 public class ParkingLot {
 
-    private static final int PARKING_LOT_CAPACITY = 10;
+    private final int capacity;
     private final Set<Car> carsParked = new HashSet<>();
 
+    public ParkingLot(int capacity) {
+        this.capacity = capacity;
+    }
+
     public boolean hasSpace() {
-        return carsParked.size() < PARKING_LOT_CAPACITY;
+        return carsParked.size() < capacity;
     }
 
     public Set<Car> getCarsParked() {
@@ -21,7 +25,11 @@ public class ParkingLot {
     }
 
     public boolean checkCapacityRate(int rate) {
-      return (PARKING_LOT_CAPACITY * 0.8 <= rate);
+        return getCurrentRate() <= rate;
+    }
+
+    private int getCurrentRate() {
+        return carsParked.size() * 100 / capacity;
     }
 
 }

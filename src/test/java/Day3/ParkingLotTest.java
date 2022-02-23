@@ -1,5 +1,6 @@
 package Day3;
 
+import org.mockito.Mockito;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -13,7 +14,7 @@ public class ParkingLotTest {
 
     @BeforeMethod
     public void setUp() {
-        parkingLot = new ParkingLot(10);
+        parkingLot = new ParkingLot(5);
     }
 
     @Test
@@ -49,4 +50,19 @@ public class ParkingLotTest {
         parkingLot.park(car);
         assertFalse(parkingLot.checkCapacityRate(80));
     }
+
+    @Test
+    public void itShouldNotifyAOwnerWhenParkingLotIsOver75Percentage() {
+        var carOne = new Car();
+        var carTwo = new Car();
+        var carThree = new Car();
+        var notification = new OverUsageNotification();
+        parkingLot.park(carOne);
+        parkingLot.park(carTwo);
+        parkingLot.park(carThree);
+        Mockito.verify(notification).sendNotification();
+        assertTrue(parkingLot.checkCapacityRate(75));
+
+    }
+
 }

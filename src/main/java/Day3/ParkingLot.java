@@ -7,9 +7,11 @@ public class ParkingLot {
 
     private final int capacity;
     private final Set<Car> carsParked = new HashSet<>();
+    private final OverUsageNotification notification;
 
     public ParkingLot(int capacity) {
         this.capacity = capacity;
+        this.notification = new OverUsageNotification();
     }
 
     public boolean hasSpace() {

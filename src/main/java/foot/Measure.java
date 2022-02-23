@@ -5,7 +5,7 @@ public abstract class Measure {
     double value;
     double metroConversionFactor;
 
-    public Measure(double metroConversionFactor, double value) {
+    public Measure(double value, double metroConversionFactor) {
         this.value = value;
         this.metroConversionFactor = metroConversionFactor;
     }

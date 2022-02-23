@@ -6,17 +6,20 @@ import static org.testng.Assert.assertEquals;
 
 public class CarTest {
     @Test
-    public void itShouldParkACarInAParkingLot() {
+    public void itShouldParkInAParkingLot() {
         Car car = new Car();
         assertEquals(car.parkIn("Parking"), "Car park in Parking");
-        assertEquals(car.getParkedIn(), "Parking");
-
     }
 
     @Test
-    public void itShouldRetrieveCarFromParkingLot() {
+    public void itShouldBeingRetrieveFromAParkingLot() {
         Car car = new Car();
-        car.parkOut();
-        assertEquals(car.getParkedIn(), "");
+        assertEquals(car.parkOut("Parking"), "Car is being retrieve from Parking");
+    }
+
+    @Test
+    public void itShouldBeParkedByTheAssistant() {
+        Car car = new Car();
+        assertEquals(car.parkInBy(person, location), "Car is being parked in parking by assistant");
     }
 }

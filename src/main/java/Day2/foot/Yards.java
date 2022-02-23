@@ -1,4 +1,4 @@
-package foot;
+package Day2.foot;
 
 public class Yards extends Measure{
     public Yards(double value) {

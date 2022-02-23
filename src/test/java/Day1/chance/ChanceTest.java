@@ -1,4 +1,4 @@
-package chance;
+package Day1.chance;
 
 import org.testng.annotations.Test;
 

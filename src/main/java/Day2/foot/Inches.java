@@ -1,4 +1,4 @@
-package foot;
+package Day2.foot;
 
 public class Inches extends Measure{
     public Inches(double value) {

@@ -1,4 +1,4 @@
-package foot;
+package Day2.foot;
 
 public class Centimeter extends Measure {
     public Centimeter(double value) {

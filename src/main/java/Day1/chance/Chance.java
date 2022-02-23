@@ -1,4 +1,4 @@
-package chance;
+package Day1.chance;
 
 public class Chance {
     private static double SIDE_OF_A_DICE = 6;

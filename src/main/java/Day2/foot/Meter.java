@@ -1,4 +1,4 @@
-package foot;
+package Day2.foot;
 
 public class Meter extends Measure {
 

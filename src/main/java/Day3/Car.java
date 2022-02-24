@@ -3,18 +3,18 @@ package Day3;
 public class Car {
 
     private final String size;
-    private final boolean adaptable;
+    private final boolean handicapped;
 
-    public Car(String size, boolean adaptable) {
+    public Car(String size, boolean handicapped) {
         this.size = size;
-        this.adaptable = adaptable;
+        this.handicapped = handicapped;
     }
 
     public boolean isLarge() {
         return size.equals("Large");
     }
 
-    public boolean isAdaptable() {
-        return adaptable;
+    public boolean isHandicapped() {
+        return handicapped;
     }
 }

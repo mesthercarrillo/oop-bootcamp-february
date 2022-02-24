@@ -21,11 +21,7 @@ public class ParkingLot {
         return carsParked.size() < capacity;
     }
 
-
     public void park(Car car) {
-        if(car.isAdaptable() && !handicapFriendly){
-            return;
-        }
         carsParked.add(car);
         usageService.manageUsage(this);
     }
@@ -49,19 +45,19 @@ public class ParkingLot {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
         ParkingLot that = (ParkingLot) o;
-        return capacity == that.capacity && Objects.equals(carsParked, that.carsParked) &&
-            Objects.equals(usageService, that.usageService);
+        return capacity == that.capacity && handicapFriendly == that.handicapFriendly
+            && carsParked.equals(that.carsParked) && usageService.equals(that.usageService);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(capacity, carsParked, usageService);
+        return Objects.hash(capacity, handicapFriendly, carsParked, usageService);
+    }
+
+    public boolean isHandicapFriendly() {
+        return handicapFriendly;
     }
 }

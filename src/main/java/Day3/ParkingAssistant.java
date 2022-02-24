@@ -19,7 +19,8 @@ public class ParkingAssistant {
 
     public ParkingLot parkInFirstParkingLotAvailable(Car car) {
         var parkingLotStream = parkingLots.stream()
-            .filter(this::hasTheParkingLotCapacity);
+            .filter(this::hasTheParkingLotCapacity)
+            .filter(parkingLot -> !car.isHandicapped() || parkingLot.isHandicapFriendly());
         if (car.isLarge()) {
             return parkingLotStream
                 .min(comparingDouble(ParkingLot::calculateCurrentRate))
@@ -28,6 +29,7 @@ public class ParkingAssistant {
                 return parkingLot;
             }).orElse(null);
         }
+
         return parkingLotStream
             .findFirst()
             .map(parkingLot -> {

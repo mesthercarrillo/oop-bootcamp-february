@@ -7,11 +7,14 @@ import org.testng.annotations.Test;
 
 import java.util.HashSet;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
 import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertNull;
 
 public class ParkingAssistantTest {
 
@@ -20,7 +23,7 @@ public class ParkingAssistantTest {
     private static String LARGE_CAR_SIZE = "Large";
 
     @Mock
-    private UsageService  usageService;
+    private UsageService usageService;
 
     @BeforeMethod
     public void setUp() {
@@ -33,7 +36,7 @@ public class ParkingAssistantTest {
     public void itShouldParkACarInTheFirstParkingLotAvailable() {
         var parkingLot = mock(ParkingLot.class);
         when(parkingLot.hasSpace()).thenReturn(true);
-        when(usageService.checkCapacityRateLessThan(parkingLot,80)).thenReturn(true);
+        when(usageService.checkCapacityRateLessThan(parkingLot, 80)).thenReturn(true);
 
         parkingAssistant.addParkingLot(parkingLot);
         var car = new Car(SMALL_CAR_SIZE, false);
@@ -42,17 +45,15 @@ public class ParkingAssistantTest {
         var selectedParking = parkingAssistant.parkInFirstParkingLotAvailable(car);
         assertEquals(selectedParking, parkingLot);
         Mockito.verify(parkingLot).park(car);
-        Mockito.verify(usageService).checkCapacityRateLessThan(parkingLot,80);
+        Mockito.verify(usageService).checkCapacityRateLessThan(parkingLot, 80);
     }
 
     @Test
     public void itShouldParkALargeCarInTheParkingLotWithMoreCapacity() {
         var parkingLot30Percent = mock(ParkingLot.class);
         var parkingLot40Percent = mock(ParkingLot.class);
-        when(parkingLot30Percent.hasSpace()).thenReturn(true);
-        when(parkingLot40Percent.hasSpace()).thenReturn(true);
-        when(usageService.getCurrentRate(parkingLot30Percent)).thenReturn(30d);
-        when(usageService.getCurrentRate(parkingLot40Percent)).thenReturn(40d);
+        when(usageService.checkCapacityRateLessThan(parkingLot30Percent, 80d)).thenReturn(true);
+        when(usageService.checkCapacityRateLessThan(parkingLot40Percent, 80d)).thenReturn(true);
 
         parkingAssistant.addParkingLot(parkingLot40Percent);
         parkingAssistant.addParkingLot(parkingLot30Percent);
@@ -63,11 +64,34 @@ public class ParkingAssistantTest {
         assertEquals(selectedParking, parkingLot30Percent);
         verify(parkingLot30Percent).park(car);
     }
-    
+
     @Test
     public void itShouldParkAHandicapCarInAParkingLotThatAcceptsHandicaps() {
-        
+        var handicapFriendlyParkingLot = mock(ParkingLot.class);
+        when(handicapFriendlyParkingLot.isHandicapFriendly()).thenReturn(true);
+        when(usageService.checkCapacityRateLessThan(handicapFriendlyParkingLot, 80d)).thenReturn(true);
+
+        parkingAssistant.addParkingLot(handicapFriendlyParkingLot);
+
+        Car car = new Car(SMALL_CAR_SIZE, true);
+        var selectedParking = parkingAssistant.parkInFirstParkingLotAvailable(car);
+
+        assertEquals(selectedParking, handicapFriendlyParkingLot);
+        verify(handicapFriendlyParkingLot).park(car);
     }
 
+    @Test
+    public void itShouldNotParkAHandicapCarIfThereAreNoParkingLotsThatAcceptsHandicaps() {
+        var handicapUnfriendlyParkingLot = mock(ParkingLot.class);
+        when(handicapUnfriendlyParkingLot.isHandicapFriendly()).thenReturn(false);
+        when(usageService.checkCapacityRateLessThan(handicapUnfriendlyParkingLot, 80d)).thenReturn(true);
 
+        parkingAssistant.addParkingLot(handicapUnfriendlyParkingLot);
+
+        Car car = new Car(SMALL_CAR_SIZE, true);
+        var selectedParking = parkingAssistant.parkInFirstParkingLotAvailable(car);
+
+        assertNull(selectedParking);
+        verify(handicapUnfriendlyParkingLot, never()).park(car);
+    }
 }

@@ -14,8 +14,8 @@ public class UsageService {
         return getCurrentRate(parkingLot) <= rate;
     }
 
-    public int getCurrentRate(ParkingLot parkingLot) {
-        return parkingLot.getCarsParked().size() * 100 / parkingLot.getCapacity();
+    public Double getCurrentRate(ParkingLot parkingLot) {
+        return parkingLot.calculateCurrentRate();
     }
 
 }

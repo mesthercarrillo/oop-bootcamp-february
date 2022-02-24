@@ -1,6 +1,10 @@
 package Day3;
 
+import java.util.Comparator;
 import java.util.Set;
+import java.util.stream.Stream;
+
+import static java.util.Comparator.comparingDouble;
 
 public class ParkingAssistant {
 
@@ -14,11 +18,19 @@ public class ParkingAssistant {
     }
 
     public ParkingLot parkInFirstParkingLotAvailable(Car car) {
-        return parkingLots.stream()
-            .filter(ParkingLot::hasSpace)
-            .filter(parkingLot ->
-                hasTheParkingLotCapacity(parkingLot))
-            .findFirst().map(parkingLot -> {
+        var parkingLotStream = parkingLots.stream()
+            .filter(this::hasTheParkingLotCapacity);
+        if (car.isLarge()) {
+            return parkingLotStream
+                .min(comparingDouble(ParkingLot::calculateCurrentRate))
+                .map(parkingLot -> {
+                parkingLot.park(car);
+                return parkingLot;
+            }).orElse(null);
+        }
+        return parkingLotStream
+            .findFirst()
+            .map(parkingLot -> {
                 parkingLot.park(car);
                 return parkingLot;
             }).orElse(null);
@@ -28,7 +40,7 @@ public class ParkingAssistant {
         return usageService.checkCapacityRateLessThan(parkingLot, PARKING_CAPACITY_RATE);
     }
 
-    public void addParkingLot(ParkingLot parkingLot){
+    public void addParkingLot(ParkingLot parkingLot) {
         parkingLots.add(parkingLot);
     }
 }

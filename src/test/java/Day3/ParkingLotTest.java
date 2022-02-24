@@ -20,7 +20,7 @@ public class ParkingLotTest {
     @BeforeMethod
     public void setUp() {
         initMocks(this);
-        parkingLot = new ParkingLot(5, usageService);
+        parkingLot = new ParkingLot(5, false, usageService);
     }
 
     @Test
@@ -30,15 +30,15 @@ public class ParkingLotTest {
 
     @Test
     public void itShouldIfNotHasSpace() {
-        var parkingLot = new ParkingLot(1, usageService);
-        var car = new Car(CAR_SIZE);
+        var parkingLot = new ParkingLot(1, false, usageService);
+        var car = new Car(CAR_SIZE, false);
         parkingLot.park(car);
         assertFalse(parkingLot.hasSpace());
     }
 
     @Test
     public void itShouldParkACar() {
-        var car = new Car(CAR_SIZE);
+        var car = new Car(CAR_SIZE, false);
         parkingLot.park(car);
         assertEquals(parkingLot.getCarsParked().size(), 1);
 
@@ -46,12 +46,22 @@ public class ParkingLotTest {
 
     @Test
     public void itShouldParkOutACar() {
-        var car = new Car(CAR_SIZE);
+        var car = new Car(CAR_SIZE, false);
         parkingLot.park(car);
         assertEquals(parkingLot.getCarsParked().size(), 1);
         parkingLot.parkOut(car);
         assertFalse(parkingLot.getCarsParked().contains(car));
     }
 
+    @Test
+    public void itShouldNotParkAnAdaptableCarIfTheParkingIsNotHandicapFriendly() {
+        var parkingLot = new ParkingLot(4, false, usageService);
+        var car = new Car(CAR_SIZE, true);
+
+        parkingLot.park(car);
+        assertFalse(parkingLot.getCarsParked().contains(car));
+
+
+    }
 
 }

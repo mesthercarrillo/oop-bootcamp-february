@@ -9,12 +9,9 @@ public class ParkingLot {
     private final Set<Car> carsParked = new HashSet<>();
     private final UsageNotification usageNotification;
 
-    public ParkingLot(int capacity, UsageNotification overUsageNotification) {
+    public ParkingLot(int capacity, UsageNotification usageNotification) {
         this.capacity = capacity;
-        this.usageNotification = overUsageNotification;
-        if (checkCapacityRateLessThan(20)) {
-            overUsageNotification.sendUnderuseNotification();
-        }
+        this.usageNotification = usageNotification;
     }
 
     public boolean hasSpace() {
@@ -27,10 +24,15 @@ public class ParkingLot {
 
     public void park(Car car) {
         carsParked.add(car);
-        if (!checkCapacityRateLessThan(75)) {
-            usageNotification.sendOveruseNotification();
-        }
+        manageUsage();
     }
+
+    private void manageUsage() {
+        //if (!checkCapacityRateLessThan(75) || checkCapacityRateLessThan(20))
+
+    }
+
+    //TODO Implement park out, to also send a notification.
 
     public boolean checkCapacityRateLessThan(int rate) {
         return getCurrentRate() <= rate;

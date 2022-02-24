@@ -5,6 +5,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
@@ -65,15 +66,16 @@ public class ParkingLotTest {
         parkingLot.park(carTwo);
         parkingLot.park(carThree);
         parkingLot.park(carFour);
-        Mockito.verify(usageNotification).sendOveruseNotification();
+        verify(usageNotification).sendOveruseNotification();
         assertFalse(parkingLot.checkCapacityRateLessThan(75));
 
     }
 
     @Test
     public void itShouldNotifyWhenParkingLotUsageIsLessTha20Percent() {
-
-        Mockito.verify(usageNotification).sendUnderuseNotification();
+        var carOne = new Car();
+        parkingLot.park(carOne);
+        verify(usageNotification).sendUnderuseNotification();
 
     }
 

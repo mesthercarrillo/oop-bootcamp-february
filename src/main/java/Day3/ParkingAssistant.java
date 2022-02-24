@@ -16,11 +16,16 @@ public class ParkingAssistant {
     public ParkingLot parkInFirstParkingLotAvailable(Car car) {
         return parkingLots.stream()
             .filter(ParkingLot::hasSpace)
-            .filter(parkingLot -> usageService.checkCapacityRateLessThan(parkingLot, PARKING_CAPACITY_RATE))
+            .filter(parkingLot ->
+                hasTheParkingLotCapacity(parkingLot))
             .findFirst().map(parkingLot -> {
                 parkingLot.park(car);
                 return parkingLot;
             }).orElse(null);
+    }
+
+    private boolean hasTheParkingLotCapacity(ParkingLot parkingLot) {
+        return usageService.checkCapacityRateLessThan(parkingLot, PARKING_CAPACITY_RATE);
     }
 
     public void addParkingLot(ParkingLot parkingLot){

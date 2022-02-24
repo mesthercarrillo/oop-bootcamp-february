@@ -32,8 +32,8 @@ public class ParkingLot {
         return carsParked;
     }
 
-    //TODO Implement park out, to also send a notification.
-
-
-
+    public void parkOut(Car car) {
+        carsParked.remove(car);
+        usageService.manageUsage(this);
+    }
 }

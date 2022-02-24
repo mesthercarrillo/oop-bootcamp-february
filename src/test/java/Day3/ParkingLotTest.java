@@ -1,11 +1,10 @@
 package Day3;
 
-import org.mockito.Mockito;
+import org.mockito.Mock;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
+import static org.mockito.MockitoAnnotations.initMocks;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
@@ -14,12 +13,13 @@ public class ParkingLotTest {
 
     private ParkingLot parkingLot;
 
-    private UsageNotification usageNotification;
+    @Mock
+    private UsageService usageService;
 
     @BeforeMethod
     public void setUp() {
-        usageNotification = mock(UsageNotification.class);
-        parkingLot = new ParkingLot(5, usageNotification);
+        initMocks(this);
+        parkingLot = new ParkingLot(5, usageService);
     }
 
     @Test
@@ -29,7 +29,7 @@ public class ParkingLotTest {
 
     @Test
     public void itShouldIfNotHasSpace() {
-        var parkingLot = new ParkingLot(1, usageNotification);
+        var parkingLot = new ParkingLot(1, usageService);
         var car = new Car();
         parkingLot.park(car);
         assertFalse(parkingLot.hasSpace());
@@ -43,40 +43,5 @@ public class ParkingLotTest {
 
     }
 
-    @Test
-    public void itShouldCheckCapacityRateBelowLimit() {
-        assertTrue(parkingLot.checkCapacityRateLessThan(80));
-    }
-
-    @Test
-    public void itShouldCheckCapacityRateAboveLimit() {
-        var parkingLot = new ParkingLot(1, usageNotification);
-        var car = new Car();
-        parkingLot.park(car);
-        assertFalse(parkingLot.checkCapacityRateLessThan(80));
-    }
-
-    @Test
-    public void itShouldNotifyAOwnerWhenParkingLotIsOver75Percentage() {
-        var carOne = new Car();
-        var carTwo = new Car();
-        var carThree = new Car();
-        var carFour = new Car();
-        parkingLot.park(carOne);
-        parkingLot.park(carTwo);
-        parkingLot.park(carThree);
-        parkingLot.park(carFour);
-        verify(usageNotification).sendOveruseNotification();
-        assertFalse(parkingLot.checkCapacityRateLessThan(75));
-
-    }
-
-    @Test
-    public void itShouldNotifyWhenParkingLotUsageIsLessTha20Percent() {
-        var carOne = new Car();
-        parkingLot.park(carOne);
-        verify(usageNotification).sendUnderuseNotification();
-
-    }
 
 }

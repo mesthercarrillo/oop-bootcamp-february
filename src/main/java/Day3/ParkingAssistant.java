@@ -16,7 +16,6 @@ public class ParkingAssistant {
             .filter(ParkingLot::hasSpace)
             .filter(parkingLot -> parkingLot.checkCapacityRateLessThan(PARKING_CAPACITY_RATE))
             .peek(parkingLot -> parkingLot.park(car))
-            .findFirst()
-            .get();
+            .findFirst().orElse(null);
     }
 }

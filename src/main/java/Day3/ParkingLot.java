@@ -23,6 +23,9 @@ public class ParkingLot {
 
 
     public void park(Car car) {
+        if(car.isAdaptable() && !handicapFriendly){
+            return;
+        }
         carsParked.add(car);
         usageService.manageUsage(this);
     }

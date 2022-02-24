@@ -13,12 +13,12 @@ public class ParkingLotTest {
 
     private ParkingLot parkingLot;
 
-    private OverUsageNotification notification;
+    private UsageNotification usageNotification;
 
     @BeforeMethod
     public void setUp() {
-        notification = mock(OverUsageNotification.class);
-        parkingLot = new ParkingLot(5, notification);
+        usageNotification = mock(UsageNotification.class);
+        parkingLot = new ParkingLot(5, usageNotification);
     }
 
     @Test
@@ -28,7 +28,7 @@ public class ParkingLotTest {
 
     @Test
     public void itShouldIfNotHasSpace() {
-        var parkingLot = new ParkingLot(1, notification);
+        var parkingLot = new ParkingLot(1, usageNotification);
         var car = new Car();
         parkingLot.park(car);
         assertFalse(parkingLot.hasSpace());
@@ -49,7 +49,7 @@ public class ParkingLotTest {
 
     @Test
     public void itShouldCheckCapacityRateAboveLimit() {
-        var parkingLot = new ParkingLot(1, notification);
+        var parkingLot = new ParkingLot(1, usageNotification);
         var car = new Car();
         parkingLot.park(car);
         assertFalse(parkingLot.checkCapacityRateLessThan(80));
@@ -65,8 +65,15 @@ public class ParkingLotTest {
         parkingLot.park(carTwo);
         parkingLot.park(carThree);
         parkingLot.park(carFour);
-        Mockito.verify(notification).sendNotification();
+        Mockito.verify(usageNotification).sendOveruseNotification();
         assertFalse(parkingLot.checkCapacityRateLessThan(75));
+
+    }
+
+    @Test
+    public void itShouldNotifyWhenParkingLotUsageIsLessTha20Percent() {
+
+        Mockito.verify(usageNotification).sendUnderuseNotification();
 
     }
 

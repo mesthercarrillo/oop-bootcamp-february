@@ -3,11 +3,19 @@ package Day4;
 import java.time.LocalDateTime;
 
 public class Greeter {
-    public static String greet(String name) {
-        LocalDateTime currentMoment = LocalDateTime.now();
-        //int currentHour = currentMoment.getHour();
-        //int currentMinute = currentMoment.getMinute();
 
+    private final String actualTime; //"6:23"
+
+    public Greeter(String actualTime) {
+        this.actualTime = actualTime;
+    }
+
+    public String greet(String name) {
+        String[] splitedTime = actualTime.split(":");
+
+        if (Integer.valueOf(splitedTime[0])  >= 6 && Integer.valueOf(splitedTime[0])  <= 12 ) {
+            return "Good morning " + formatNameInputName(name);
+        }
         return "Hello " + formatNameInputName(name);
     }
 

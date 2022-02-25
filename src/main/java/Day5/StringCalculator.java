@@ -1,20 +1,16 @@
 package Day5;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 public class StringCalculator {
 
-
     public static int add(String numbers) {
-        if (numbers.length() == 0) {
+        if (numbers.trim().isEmpty()) {
             return 0;
-        } else if (numbers.length() == 1) {
-            return Integer.parseInt(numbers);
-        } else {
-            String[] splitNumbers = numbers.split(",");
-            int sum = 0;
-            for (String splitNumber : splitNumbers) {
-                sum = sum + Integer.parseInt(splitNumber);
-            }
-            return sum;
         }
+
+        ArrayList<String> numbersList = new ArrayList<>(Arrays.asList(numbers.trim().split(",|\\n")));
+        return numbersList.stream().mapToInt(Integer::parseInt).sum();
     }
 }

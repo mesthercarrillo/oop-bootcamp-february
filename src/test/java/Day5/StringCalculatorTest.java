@@ -19,7 +19,10 @@ public class StringCalculatorTest {
     @Test
     public void itShouldReturnTheSumOfTwoNumberDelimitedByAComma() {
         assertEquals(StringCalculator.add("1,2"), 3);
-
     }
 
+    @Test
+    public void itShouldReturnTheSumOfTwoNumbersDelimitedByNewLine() {
+        assertEquals(StringCalculator.add("1\n2"), 3);
+    }
 }

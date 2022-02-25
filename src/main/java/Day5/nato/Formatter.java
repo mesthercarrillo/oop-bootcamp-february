@@ -1,12 +1,17 @@
 package Day5.nato;
 
+import com.google.common.collect.ImmutableMap;
+import com.sun.jdi.CharType;
+
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
 public class Formatter {
 
     private static final Map<String, String> ALPHABET_TRANSLATOR = new HashMap<>();
+
     static {
         ALPHABET_TRANSLATOR.put("a", "alpha");
         ALPHABET_TRANSLATOR.put("b", "bravo");
@@ -40,9 +45,13 @@ public class Formatter {
         ALPHABET_TRANSLATOR.put("z", "zulu");
     }
 
-
     public static String encode(String message) {
+        String encodedText = "";
+        String[] messageArray = message.split("");
 
-        return "hotel-echo-lima-lima-oscar";
+        for (int i = 0; i < messageArray.length; i++) {
+            encodedText +=  ALPHABET_TRANSLATOR.get(i);
+        }
+        return encodedText;
     }
 }

@@ -7,10 +7,12 @@ import static org.testng.Assert.*;
 public class FormatterTest {
 
     @Test
-    public void itShouldEncodeAMessage() {
-        assertEquals(Formatter.encode("hello"), "hotel-echo-lima-lima-oscar");
-
-
+    public void itShouldEncodeALetter() {
+        assertEquals(Formatter.encode("h"), "hotel");
     }
 
+    @Test
+    public void itShouldEncodeAMessage() {
+        assertEquals(Formatter.encode("hello"), "hotel-echo-lima-lima-oscar");
+    }
 }
